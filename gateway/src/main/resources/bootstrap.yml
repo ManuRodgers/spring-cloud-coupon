@@ -1,0 +1,41 @@
+server:
+  port: 7000
+  servlet:
+    context-path: /coupon-gateway
+spring:
+  application:
+    name: coupon-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        enabled: true
+        namespace: 54385064-b688-4381-86a5-d4226251cbbb
+        group: COUPON
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
+      config:
+        file-extension: yaml
+        namespace: 54385064-b688-4381-86a5-d4226251cbbb
+        group: COUPON
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  main:
+    allow-bean-definition-overriding: true  # 因为将来会引入很多依赖, 难免有重名的 bean
+    web-application-type: reactive
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+

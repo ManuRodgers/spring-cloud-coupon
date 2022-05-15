@@ -1,0 +1,36 @@
+server:
+  port: 7100
+  servlet:
+    context-path: /coupon-monitor
+spring:
+  application:
+    name: coupon-monitor
+  security:
+    user:
+      name: manurodgers
+      password: 88888888
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      # 服务注册发现
+      discovery:
+        enabled: true # 如果不想使用 Nacos 进行服务注册和发现, 设置为 false 即可
+        server-addr: 127.0.0.1:8848
+        # server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850 # Nacos 服务器地址
+        namespace: 54385064-b688-4381-86a5-d4226251cbbb
+        group: COUPON
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
+          user.name: manurodgers
+          user.password: 88888888
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  # 需要开放的端点。默认值只打开 health 和 info 两个端点。通过设置 *, 可以开放所有端点
+  endpoint:
+    health:
+      show-details: always
